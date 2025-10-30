@@ -11,4 +11,8 @@ contract ManualToken{
     function symbol() public pure returns(string memory) {
         return "MTK";
     }
+
+    function totalSupply() public pure returns(uint256){
+        return 100 ether;
+    }
 }
