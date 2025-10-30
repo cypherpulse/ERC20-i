@@ -8,5 +8,7 @@ contract ManualToken{
         return "ManualToken";
     }
 
-    
+    function symbol() public pure returns(string memory) {
+        return "MTK";
+    }
 }
