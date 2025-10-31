@@ -66,5 +66,9 @@ contract OurTokenTest is Test{
 
        // Charlie approves Dave to spend tokens on his behalf
        vm.prank(charlie);
+       ourToken.approve(dave, approvalAmount);
+
+       // Dave transfers tokens from Charlie to himself
+       vm.prank(dave);
     }
 }
