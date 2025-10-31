@@ -158,4 +158,14 @@ contract OurTokenTest is Test{
         vm.expectRevert();
         ourToken.transferFrom(owner, spender, transferAmount);
     }
+
+        function testTransferEvent() public {
+        address recipient = makeAddr("recipient");
+        uint256 transferAmount = 100 ether;
+
+        vm.prank(msg.sender);
+        vm.expectEmit(true, true, false, true);
+        emit Transfer(msg.sender, recipient, transferAmount);
+        ourToken.transfer(recipient, transferAmount);
+    }
 }
