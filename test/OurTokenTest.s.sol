@@ -91,6 +91,7 @@ contract OurTokenTest is Test {
 
         vm.prank(msg.sender);
         ourToken.approve(spender, initialApproval);
+        vm.prank(msg.sender);
         ourToken.increaseAllowance(spender, increaseAmount);
 
         assertEq(ourToken.allowance(msg.sender, spender), initialApproval + increaseAmount);
@@ -103,6 +104,7 @@ contract OurTokenTest is Test {
 
         vm.prank(msg.sender);
         ourToken.approve(spender, initialApproval);
+        vm.prank(msg.sender);
         ourToken.decreaseAllowance(spender, decreaseAmount);
 
         assertEq(ourToken.allowance(msg.sender, spender), initialApproval - decreaseAmount);
@@ -115,6 +117,7 @@ contract OurTokenTest is Test {
 
         vm.prank(msg.sender);
         ourToken.approve(spender, initialApproval);
+        vm.prank(msg.sender);
         vm.expectRevert();
         ourToken.decreaseAllowance(spender, decreaseAmount);
     }
