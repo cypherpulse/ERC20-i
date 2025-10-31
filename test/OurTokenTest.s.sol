@@ -54,5 +54,9 @@ contract OurTokenTest is Test{
         assertEq(ourToken.balanceOf(msg.sender),deployer.INITIAL_SUPPLY() - STARTING_BALANCE - transferAmount);
     }
 
-    function testTransferFrom() public{}
+    function testTransferFrom() public{
+        address charlie = makeAddr("charlie");
+        address dave = makeAddr("dave");
+        uint
+    }
 }
