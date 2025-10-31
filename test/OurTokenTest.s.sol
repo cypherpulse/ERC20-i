@@ -54,6 +54,57 @@ contract OurTokenTest is Test{
         assertEq(ourToken.balanceOf(msg.sender),deployer.INITIAL_SUPPLY() - STARTING_BALANCE - transferAmount);
     }
 
+        function testTransferToZeroAddress() public {
+        uint256 transferAmount = 100 ether;
+
+        vm.prank(msg.sender);
+        vm.expectRevert();
+        ourToken.transfer(address(0), transferAmount);
+    }
+
+        function testTransferInsufficientBalance() public {
+        address recipient = makeAddr("recipient");
+        uint256 transferAmount = deployer.INITIAL_SUPPLY() + 1;
+
+        vm.prank(msg.sender);
+        vm.expectRevert();
+        ourToken.transfer(recipient, transferAmount);
+    }
+
+       function testApprove() public {
+        address spender = makeAddr("spender");
+        uint256 approvalAmount = 500 ether;
+
+        vm.prank(msg.sender);
+        ourToken.approve(spender, approvalAmount);
+
+        assertEq(ourToken.allowance(msg.sender, spender), approvalAmount);
+    }
+
+        function testIncreaseAllowance() public {
+        address spender = makeAddr("spender");
+        uint256 initialApproval = 100 ether;
+        uint256 increaseAmount = 50 ether;
+
+        vm.prank(msg.sender);
+        ourToken.approve(spender, initialApproval);
+        ourToken.increaseAllowance(spender, increaseAmount);
+
+        assertEq(ourToken.allowance(msg.sender, spender), initialApproval + increaseAmount);
+    }
+
+        function testDecreaseAllowance() public {
+        address spender = makeAddr("spender");
+        uint256 initialApproval = 100 ether;
+        uint256 decreaseAmount = 30 ether;
+
+        vm.prank(msg.sender);
+        ourToken.approve(spender, initialApproval);
+        ourToken.decreaseAllowance(spender, decreaseAmount);
+
+        assertEq(ourToken.allowance(msg.sender, spender), initialApproval - decreaseAmount);
+    }
+    
     function testTransferFrom() public{
         address charlie = makeAddr("charlie");
         address dave = makeAddr("dave");
