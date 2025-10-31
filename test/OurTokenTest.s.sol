@@ -178,4 +178,14 @@ contract OurTokenTest is Test{
         emit Approval(msg.sender, spender, approvalAmount);
         ourToken.approve(spender, approvalAmount);
     }
+
+        function testNameAndSymbol() public {
+        assertEq(ourToken.name(), "OurToken");
+        assertEq(ourToken.symbol(), "OT");
+    }
+
+    
+    function testDecimals() public {
+        assertEq(ourToken.decimals(), 18);
+    }
 }
