@@ -70,5 +70,6 @@ contract OurTokenTest is Test{
 
        // Dave transfers tokens from Charlie to himself
        vm.prank(dave);
+       ourToken.transferFrom(charlie, dave, transferAmount);
     }
 }
