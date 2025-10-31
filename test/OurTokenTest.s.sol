@@ -6,7 +6,10 @@ import {Test} from "lib/forge-std/src/Test.sol";
 import {DeployOurToken} from "../script/DeployOurToken.s.sol";
 import {OurToken} from "../src/OurToken.sol";
 
-contract OurTokenTest is Test{
+contract OurTokenTest is Test {
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
     OurToken public ourToken;
     DeployOurToken public deployer;
 
@@ -15,7 +18,7 @@ contract OurTokenTest is Test{
 
     uint256 public constant STARTING_BALANCE = 100 ether;
 
-    function setUp() public{
+    function setUp() public {
         deployer = new DeployOurToken();
         ourToken = deployer.run();
 
@@ -33,9 +36,9 @@ contract OurTokenTest is Test{
         //Bob approves Alice to spend tokens on his behalf
         vm.prank(bob);
         ourToken.approve(alice, initialAllowance);
-        
+
         uint256 transferAmount = 500;
-        
+
         vm.prank(alice);
         ourToken.transferFrom(bob, alice, transferAmount);
 
@@ -51,10 +54,10 @@ contract OurTokenTest is Test{
         ourToken.transfer(charlie, transferAmount);
 
         assertEq(ourToken.balanceOf(charlie), transferAmount);
-        assertEq(ourToken.balanceOf(msg.sender),deployer.INITIAL_SUPPLY() - STARTING_BALANCE - transferAmount);
+        assertEq(ourToken.balanceOf(msg.sender), deployer.INITIAL_SUPPLY() - STARTING_BALANCE - transferAmount);
     }
 
-        function testTransferToZeroAddress() public {
+    function testTransferToZeroAddress() public {
         uint256 transferAmount = 100 ether;
 
         vm.prank(msg.sender);
@@ -62,7 +65,7 @@ contract OurTokenTest is Test{
         ourToken.transfer(address(0), transferAmount);
     }
 
-        function testTransferInsufficientBalance() public {
+    function testTransferInsufficientBalance() public {
         address recipient = makeAddr("recipient");
         uint256 transferAmount = deployer.INITIAL_SUPPLY() + 1;
 
@@ -71,7 +74,7 @@ contract OurTokenTest is Test{
         ourToken.transfer(recipient, transferAmount);
     }
 
-       function testApprove() public {
+    function testApprove() public {
         address spender = makeAddr("spender");
         uint256 approvalAmount = 500 ether;
 
@@ -81,7 +84,7 @@ contract OurTokenTest is Test{
         assertEq(ourToken.allowance(msg.sender, spender), approvalAmount);
     }
 
-        function testIncreaseAllowance() public {
+    function testIncreaseAllowance() public {
         address spender = makeAddr("spender");
         uint256 initialApproval = 100 ether;
         uint256 increaseAmount = 50 ether;
@@ -93,7 +96,7 @@ contract OurTokenTest is Test{
         assertEq(ourToken.allowance(msg.sender, spender), initialApproval + increaseAmount);
     }
 
-        function testDecreaseAllowance() public {
+    function testDecreaseAllowance() public {
         address spender = makeAddr("spender");
         uint256 initialApproval = 100 ether;
         uint256 decreaseAmount = 30 ether;
@@ -105,7 +108,6 @@ contract OurTokenTest is Test{
         assertEq(ourToken.allowance(msg.sender, spender), initialApproval - decreaseAmount);
     }
 
-    
     function testDecreaseAllowanceBelowZero() public {
         address spender = makeAddr("spender");
         uint256 initialApproval = 50 ether;
@@ -117,31 +119,29 @@ contract OurTokenTest is Test{
         ourToken.decreaseAllowance(spender, decreaseAmount);
     }
 
-
-    function testTransferFrom() public{
+    function testTransferFrom() public {
         address charlie = makeAddr("charlie");
         address dave = makeAddr("dave");
         uint256 approvalAmount = 200 ether;
         uint256 transferAmount = 150 ether;
 
-       // Transfer some tokens to owner first
-       vm.prank(msg.sender);
-       ourToken.transfer(charlie, approvalAmount);
+        // Transfer some tokens to owner first
+        vm.prank(msg.sender);
+        ourToken.transfer(charlie, approvalAmount);
 
-       // Charlie approves Dave to spend tokens on his behalf
-       vm.prank(charlie);
-       ourToken.approve(dave, approvalAmount);
+        // Charlie approves Dave to spend tokens on his behalf
+        vm.prank(charlie);
+        ourToken.approve(dave, approvalAmount);
 
-       // Dave transfers tokens from Charlie to himself
-       vm.prank(dave);
-       ourToken.transferFrom(charlie, dave, transferAmount);
+        // Dave transfers tokens from Charlie to himself
+        vm.prank(dave);
+        ourToken.transferFrom(charlie, dave, transferAmount);
 
-       assertEq(ourToken.balanceOf(charlie),0);
-       assertEq(ourToken.balanceOf(dave), transferAmount);
-       assertEq(ourToken.allowance(charlie, dave),approvalAmount - transferAmount);
+        assertEq(ourToken.balanceOf(charlie), 0);
+        assertEq(ourToken.balanceOf(dave), transferAmount);
+        assertEq(ourToken.allowance(charlie, dave), approvalAmount - transferAmount);
     }
 
-    
     function testTransferFromInsufficientAllowance() public {
         address owner = makeAddr("owner");
         address spender = makeAddr("spender");
@@ -159,7 +159,7 @@ contract OurTokenTest is Test{
         ourToken.transferFrom(owner, spender, transferAmount);
     }
 
-        function testTransferEvent() public {
+    function testTransferEvent() public {
         address recipient = makeAddr("recipient");
         uint256 transferAmount = 100 ether;
 
@@ -169,7 +169,7 @@ contract OurTokenTest is Test{
         ourToken.transfer(recipient, transferAmount);
     }
 
-        function testApprovalEvent() public {
+    function testApprovalEvent() public {
         address spender = makeAddr("spender");
         uint256 approvalAmount = 200 ether;
 
@@ -179,12 +179,11 @@ contract OurTokenTest is Test{
         ourToken.approve(spender, approvalAmount);
     }
 
-        function testNameAndSymbol() public {
+    function testNameAndSymbol() public {
         assertEq(ourToken.name(), "OurToken");
         assertEq(ourToken.symbol(), "OT");
     }
 
-    
     function testDecimals() public {
         assertEq(ourToken.decimals(), 18);
     }
