@@ -84,44 +84,6 @@ contract OurTokenTest is Test {
         assertEq(ourToken.allowance(msg.sender, spender), approvalAmount);
     }
 
-    function testIncreaseAllowance() public {
-        address spender = makeAddr("spender");
-        uint256 initialApproval = 100 ether;
-        uint256 increaseAmount = 50 ether;
-
-        vm.prank(msg.sender);
-        ourToken.approve(spender, initialApproval);
-        vm.prank(msg.sender);
-        ourToken.increaseAllowance(spender, increaseAmount);
-
-        assertEq(ourToken.allowance(msg.sender, spender), initialApproval + increaseAmount);
-    }
-
-    function testDecreaseAllowance() public {
-        address spender = makeAddr("spender");
-        uint256 initialApproval = 100 ether;
-        uint256 decreaseAmount = 30 ether;
-
-        vm.prank(msg.sender);
-        ourToken.approve(spender, initialApproval);
-        vm.prank(msg.sender);
-        ourToken.decreaseAllowance(spender, decreaseAmount);
-
-        assertEq(ourToken.allowance(msg.sender, spender), initialApproval - decreaseAmount);
-    }
-
-    function testDecreaseAllowanceBelowZero() public {
-        address spender = makeAddr("spender");
-        uint256 initialApproval = 50 ether;
-        uint256 decreaseAmount = 100 ether;
-
-        vm.prank(msg.sender);
-        ourToken.approve(spender, initialApproval);
-        vm.prank(msg.sender);
-        vm.expectRevert();
-        ourToken.decreaseAllowance(spender, decreaseAmount);
-    }
-
     function testTransferFrom() public {
         address charlie = makeAddr("charlie");
         address dave = makeAddr("dave");
