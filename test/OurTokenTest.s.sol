@@ -45,5 +45,8 @@ contract OurTokenTest is Test{
 
     function testTransfer() public {
         address charlie = makeAddr("charlie");
+        uint256 transferAmount = 1000 ether;
+
+        vm.prank(msg.sender);
     }
 }
