@@ -45,9 +45,12 @@ contract OurTokenTest is Test{
 
     function testTransfer() public {
         address charlie = makeAddr("charlie");
-        uint256 transferAmount = 1000 ether;
+        uint256 transferAmount = 100 ether;
 
         vm.prank(msg.sender);
         ourToken.transfer(charlie, transferAmount);
+
+        assertEq(ourToken.balanceOf(charlie), transferAmount);
+        assertEq(ourToken.balanceOf(msg.sender),deployer.INITIAL_SUPPLY() - STARTING_BALANCE - transferAmount);
     }
 }
