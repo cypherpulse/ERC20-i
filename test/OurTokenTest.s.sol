@@ -16,5 +16,7 @@ contract OurTokenTest is Test{
     function setUp() public{
         deployer = new DeployOurToken();
         ourToken = deployer.run();
+
+        vm.prank(address(deployer));
     }
 }
