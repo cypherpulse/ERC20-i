@@ -24,6 +24,6 @@ contract OurTokenTest is Test{
     }
 
     function testBobBalance() public {
-        
+        assertEq(STARTING_BALANCE, ourToken.balanceOf(bob));
     }   
 }
