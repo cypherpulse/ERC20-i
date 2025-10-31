@@ -42,4 +42,8 @@ contract OurTokenTest is Test{
         assertEq(ourToken.balanceOf(alice), transferAmount);
         assertEq(ourToken.balanceOf(bob), STARTING_BALANCE - transferAmount);
     }
+
+    function testTransfer() public {
+        address charlie = makeAddr("charlie");
+    }
 }
