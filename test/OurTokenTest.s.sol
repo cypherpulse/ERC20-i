@@ -48,5 +48,6 @@ contract OurTokenTest is Test{
         uint256 transferAmount = 1000 ether;
 
         vm.prank(msg.sender);
+        ourToken.transfer(charlie, transferAmount);
     }
 }
