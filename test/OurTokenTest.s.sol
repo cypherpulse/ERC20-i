@@ -71,5 +71,9 @@ contract OurTokenTest is Test{
        // Dave transfers tokens from Charlie to himself
        vm.prank(dave);
        ourToken.transferFrom(charlie, dave, transferAmount);
+
+       assertEq(ourToken.balanceOf(charlie),0);
+       assertEq(ourToken.balanceOf(dave), transferAmount);
+       assertEq(ourToken.allowance(charlie, dave),approvalAmount - transferAmount);
     }
 }
