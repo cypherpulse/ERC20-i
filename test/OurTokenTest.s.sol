@@ -61,6 +61,6 @@ contract OurTokenTest is Test{
         uint256 transferAmount = 150 ether;
 
        // Transfer some tokens to owner first
-       
+       vm.prank(msg.sender);
     }
 }
