@@ -168,4 +168,14 @@ contract OurTokenTest is Test{
         emit Transfer(msg.sender, recipient, transferAmount);
         ourToken.transfer(recipient, transferAmount);
     }
+
+        function testApprovalEvent() public {
+        address spender = makeAddr("spender");
+        uint256 approvalAmount = 200 ether;
+
+        vm.prank(msg.sender);
+        vm.expectEmit(true, true, false, true);
+        emit Approval(msg.sender, spender, approvalAmount);
+        ourToken.approve(spender, approvalAmount);
+    }
 }
