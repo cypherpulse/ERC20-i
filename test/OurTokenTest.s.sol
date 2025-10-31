@@ -57,6 +57,10 @@ contract OurTokenTest is Test{
     function testTransferFrom() public{
         address charlie = makeAddr("charlie");
         address dave = makeAddr("dave");
-        uint
+        uint256 approvalAmount = 200 ether;
+        uint256 transferAmount = 150 ether;
+
+       // Transfer some tokens to owner first
+       
     }
 }
