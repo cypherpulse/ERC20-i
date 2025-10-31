@@ -29,5 +29,8 @@ contract OurTokenTest is Test{
 
     function testAllowancesWorks() public {
         uint256 initialAllowance = 1000;
+
+        //Bob approves Alice to spend tokens on his behalf
+        
     }
 }
