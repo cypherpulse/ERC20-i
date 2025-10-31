@@ -31,6 +31,6 @@ contract OurTokenTest is Test{
         uint256 initialAllowance = 1000;
 
         //Bob approves Alice to spend tokens on his behalf
-        
+        vm.prank(bob);
     }
 }
