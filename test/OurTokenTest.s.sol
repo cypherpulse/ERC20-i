@@ -19,7 +19,7 @@ contract OurTokenTest is Test{
         deployer = new DeployOurToken();
         ourToken = deployer.run();
 
-        vm.prank(address(deployer));
+        vm.prank(msg.sender);
         ourToken.transfer(bob, STARTING_BALANCE);
     }
 
