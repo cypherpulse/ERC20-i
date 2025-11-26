@@ -8,5 +8,7 @@ contract OurToken is ERC20 {
         _mint(msg.sender, initialSupply);
     }
 
-    function mint(address to, uint256 amount) public {}
+    function mint(address to, uint256 amount) public {
+        _mint(to, amount);
+    }
 }
