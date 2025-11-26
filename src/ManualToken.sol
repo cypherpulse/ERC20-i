@@ -6,11 +6,11 @@ contract ManualToken {
     mapping(address => uint256) private s_balances;
 
     function name() public pure returns (string memory) {
-        return "ManualToken";
+        return "BradleyUSD";
     }
 
     function symbol() public pure returns (string memory) {
-        return "MTK";
+        return "BUSD";
     }
 
     function totalSupply() public pure returns (uint256) {

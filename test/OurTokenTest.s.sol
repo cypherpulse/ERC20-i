@@ -145,8 +145,8 @@ contract OurTokenTest is Test {
     }
 
     function testNameAndSymbol() public {
-        assertEq(ourToken.name(), "OurToken");
-        assertEq(ourToken.symbol(), "OT");
+        assertEq(ourToken.name(), "BasedBradley");
+        assertEq(ourToken.symbol(), "BBD");
     }
 
     function testDecimals() public {
