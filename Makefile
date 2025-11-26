@@ -2,8 +2,8 @@
 
 .PHONY: all test test-zk clean deploy fund help install snapshot format anvil install deploy deploy-zk deploy-zk-sepolia deploy-sepolia verify
 
-DEFAULT_ANVIL_KEY := 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
-DEFAULT_ZKSYNC_LOCAL_KEY := 0x7726827caac94a7f9e1b160f7ea819f172f7b6f9d2a97f992c38edeab82d4110
+DEFAULT_ANVIL_KEY :=
+DEFAULT_ZKSYNC_LOCAL_KEY :=
 
 all: clean remove install update build
 
@@ -48,3 +48,17 @@ deploy-zk-bad:
 
 verify:
 	@forge verify-contract --chain-id 11155111 --num-of-optimizations 200 --watch --constructor-args 0x00000000000000000000000000000000000000000000d3c21bcecceda1000000 --etherscan-api-key $(ETHERSCAN_API_KEY) --compiler-version v0.8.19+commit.7dd6d404 0x089dc24123e0a27d44282a1ccc2fd815989e3300 src/OurToken.sol:OurToken
+
+deploy-base-sepolia:
+    @forge script script/DeployBasedBradley.s.sol:BasedBradleyToken --rpc-url https://sepolia.base.org --account $ACCOUNT --sender $SENDER --etherscan-api-key $BASESCAN_API_KEY --broadcast --verify
+# Deploy to Base Mainnet using keystore
+deploy-base-mainnet:
+    @forge script script/DeployBasedBradley.s.sol:BasedBradleyToken --rpc-url https://mainnet.base.org --account $(ACCOUNT) --sender $(SENDER) --etherscan-api-key $(BASESCAN_API_KEY) --broadcast --verify
+
+# Verify on Base Sepolia
+verify-base-sepolia:
+    @forge verify-contract --chain-id 84532 --num-of-optimizations 200 --watch --constructor-args 0x00000000000000000000000000000000000000000000d3c21bcecceda1000000 --etherscan-api-key $(BASESCAN_API_KEY) --compiler-version v0.8.19+commit.7dd6d404 <CONTRACT_ADDRESS> src/BasedBradley.sol:BasedBradley
+
+# Verify on Base Mainnet
+verify-base-mainnet:
+    @forge verify-contract --chain-id 8453 --num-of-optimizations 200 --watch --constructor-args 0x00000000000000000000000000000000000000000000d3c21bcecceda1000000 --etherscan-api-key $(BASESCAN_API_KEY) --compiler-version v0.8.19+commit.7dd6d404 <CONTRACT_ADDRESS> src/BasedBradley.sol:BasedBradley
